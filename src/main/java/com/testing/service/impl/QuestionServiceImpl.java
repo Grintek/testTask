@@ -7,9 +7,9 @@ import com.testing.service.QuestionService;
 import javassist.tools.rmi.RemoteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -26,32 +26,32 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void createQuestion(Question question){
-        if(question.getDescription() != null){
-            questionRepository.save(question);
-        }
+    public Question createQuestion(Question question){
+           return questionRepository.save(question);
     }
 
     @Override
-    public void updateQuestion(Long id, Question question){
+    public Question updateQuestion(Long id, Question question){
         Question upQuestion = getQuestion(id);
         upQuestion.setDescription(question.getDescription());
-        upQuestion.setAnswers(question.getAnswers());
 
-        //для проверки остался какой нибудь ли answer c полем correct = true
-        AtomicReference<Boolean> correct = new AtomicReference<>(false);
-
-        if(question.getAnswers() != null) {
-            question.getAnswers().forEach(answer -> {
-                if(answer.getCorrect()){
-                    correct.set(true);
+        boolean checked = false;
+        if(!CollectionUtils.isEmpty(question.getAnswers())) {
+            for (Answer answer : question.getAnswers()) {
+                answer.setQuestion(upQuestion);
+                if (answer.getCorrect()) {
+                    checked = true;
                 }
-            });
-            if(!correct.get()){
+            }
+            if(!checked){
              question.getAnswers().get(0).setCorrect(true);
             }
         }
+
+        upQuestion.getAnswers().clear();
+        upQuestion.getAnswers().addAll(question.getAnswers());
         questionRepository.save(upQuestion);
+        return upQuestion;
     }
 
     @Override
@@ -62,14 +62,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void addAnswer(Long id, Answer answer){
+    public Question addAnswer(Long id, Answer answer){
         Question question = getQuestion(id);
         if(answer.getCorrect()){
             List<Answer> answers = question.getAnswers();
             answers.forEach(currentAnswer -> {currentAnswer.setCorrect(false);} );
         }
         question.addAnswer(answer);
-        questionRepository.save(question);
+        return questionRepository.save(question);
     }
 
     @Override

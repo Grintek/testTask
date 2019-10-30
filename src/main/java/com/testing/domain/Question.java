@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,17 +18,19 @@ public class Question {
     @JsonView(View.Description.class)
     private String description;
 
-    public Question() {
-    }
-
-    public Question(String description) {
-        this.description = description;
-    }
-
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonView({View.Answer.class})
     private List<Answer> answers;
+
+    public Question() {
+        this.answers = new ArrayList<>();
+    }
+
+    public Question(String description) {
+        this();
+        this.description = description;
+    }
 
     public void addAnswer(Answer answer){
         answers.add(answer);

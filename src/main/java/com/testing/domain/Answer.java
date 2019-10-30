@@ -27,7 +27,8 @@ public class Answer {
         this.correct = correct;
     }
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
     public Long getId() {
