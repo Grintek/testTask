@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -34,9 +35,22 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void updateQuestion(Long id, Question question){
         Question upQuestion = getQuestion(id);
-
         upQuestion.setDescription(question.getDescription());
         upQuestion.setAnswers(question.getAnswers());
+
+        //для проверки остался какой нибудь ли answer c полем correct = true
+        AtomicReference<Boolean> correct = new AtomicReference<>(false);
+
+        if(question.getAnswers() != null) {
+            question.getAnswers().forEach(answer -> {
+                if(answer.getCorrect()){
+                    correct.set(true);
+                }
+            });
+            if(!correct.get()){
+             question.getAnswers().get(0).setCorrect(true);
+            }
+        }
         questionRepository.save(upQuestion);
     }
 
