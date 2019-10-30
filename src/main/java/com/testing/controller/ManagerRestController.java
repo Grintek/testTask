@@ -29,7 +29,6 @@ public class ManagerRestController {
     }
 
     @PostMapping
-    @JsonView(View.Answer.class)
     public Question addQuestion(@RequestBody Question question){
         return questionService.createQuestion(question);
     }
@@ -40,19 +39,16 @@ public class ManagerRestController {
     }
 
     @GetMapping("/{id}")
-    @JsonView(View.Answer.class)
     public Question question(@PathVariable("id") Long id){
         return questionService.getQuestion(id);
     }
 
     @PutMapping("/{id}")
-    @JsonView(View.Answer.class)
     public Question updateQuestion(@PathVariable("id") Long id, @RequestBody Question question){
         return questionService.updateQuestion(id, question);
     }
 
     @PostMapping("/{id}/answer")
-    @JsonView(View.Answer.class)
     public Question addAnswer(@PathVariable("id")Long id, @RequestBody Answer answer){
        return questionService.addAnswer(id, answer);
     }

@@ -1,5 +1,6 @@
 package com.testing.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import net.bytebuddy.implementation.bind.annotation.Default;
 
@@ -16,8 +17,12 @@ public class Answer {
     private String name;
 
     @Column(nullable = false)
-    @JsonView(View.Answer.class)
     private Boolean correct;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id", nullable = false)
+    @JsonIgnore
+    private Question question;
 
     public Answer() {
     }
@@ -26,10 +31,6 @@ public class Answer {
         this.name = name;
         this.correct = correct;
     }
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
 
     public Long getId() {
         return id;
