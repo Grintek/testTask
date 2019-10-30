@@ -1,4 +1,4 @@
-package com.testing.rest_controllers;
+package com.testing.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,17 +14,17 @@ public class Question {
     private Long id;
 
     @NotNull
-    private String question;
+    private String description;
 
     public Question() {
     }
 
-    public Question(String question) {
-        this.question = question;
+    public Question(String description) {
+        this.description = description;
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Answer> answers;
+    private List<Answer> answers;
 
     public void addAnswer(Answer answer){
         answers.add(answer);
@@ -44,15 +44,19 @@ public class Question {
         this.id = id;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }

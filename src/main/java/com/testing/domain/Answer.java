@@ -1,6 +1,7 @@
 package com.testing.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Answer {
     private Long id;
     @NotNull
     private String name;
+    @Column(nullable = false)
     private Boolean correct;
 
     public Answer() {
