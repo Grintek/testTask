@@ -1,7 +1,9 @@
 package com.testing.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.testing.domain.Answer;
 import com.testing.domain.Question;
+import com.testing.domain.View;
 import com.testing.reposytory.QuestionRepository;
 import com.testing.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ public class ManagerRestController {
     }
 
     @GetMapping
+    @JsonView(View.Description.class)
     public List<Question> questionList(){
         return questionService.getQuestions();
     }
@@ -36,7 +39,8 @@ public class ManagerRestController {
     }
 
     @GetMapping("/{id}")
-    public Question editQuestion(@PathVariable("id") Long id){
+    @JsonView(View.Answer.class)
+    public Question question(@PathVariable("id") Long id){
         return questionService.getQuestion(id);
     }
     @PutMapping("/{id}")

@@ -2,18 +2,21 @@ package com.testing.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import net.bytebuddy.implementation.bind.annotation.Default;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
+@Entity
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(View.ID.class)
     private Long id;
     @NotNull
+    @JsonView(View.Answer.class)
     private String name;
+
     @Column(nullable = false)
+    @JsonView(View.Answer.class)
     private Boolean correct;
 
     public Answer() {

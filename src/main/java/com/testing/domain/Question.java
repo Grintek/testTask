@@ -1,6 +1,6 @@
 package com.testing.domain;
 
-import org.springframework.data.annotation.Id;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,9 +11,10 @@ import java.util.Set;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(View.ID.class)
     private Long id;
-
     @NotNull
+    @JsonView(View.Description.class)
     private String description;
 
     public Question() {
@@ -23,7 +24,9 @@ public class Question {
         this.description = description;
     }
 
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonView({View.Answer.class})
     private List<Answer> answers;
 
     public void addAnswer(Answer answer){
