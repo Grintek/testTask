@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/quetions")
+@RequestMapping("/questions")
 public class ManagerRestController {
 
     private final QuestionService questionService;
@@ -28,10 +28,12 @@ public class ManagerRestController {
         return questionService.getQuestions();
     }
 
+
     @PostMapping
     public Question addQuestion(@RequestBody Question question){
         return questionService.createQuestion(question);
     }
+
 
     @DeleteMapping("/{id}")
     public void removeQuestion(@PathVariable("id") Long id){
@@ -43,10 +45,12 @@ public class ManagerRestController {
         return questionService.getQuestion(id);
     }
 
+
     @PutMapping("/{id}")
     public Question updateQuestion(@PathVariable("id") Long id, @RequestBody Question question){
         return questionService.updateQuestion(id, question);
     }
+
 
     @PostMapping("/{id}/answer")
     public Question addAnswer(@PathVariable("id")Long id, @RequestBody Answer answer){

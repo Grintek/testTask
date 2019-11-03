@@ -64,9 +64,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question addAnswer(Long id, Answer answer){
         Question question = getQuestion(id);
+        List<Answer> answers = question.getAnswers();
         if(answer.getCorrect()){
-            List<Answer> answers = question.getAnswers();
             answers.forEach(currentAnswer -> {currentAnswer.setCorrect(false);} );
+        }else{
+            answers.forEach(currentAnswer -> {currentAnswer.setCorrect(true);} );
         }
         question.addAnswer(answer);
         return questionRepository.save(question);
