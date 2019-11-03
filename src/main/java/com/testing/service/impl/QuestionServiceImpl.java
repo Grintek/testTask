@@ -49,7 +49,9 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         upQuestion.getAnswers().clear();
+
         upQuestion.getAnswers().addAll(question.getAnswers());
+
         questionRepository.save(upQuestion);
         return upQuestion;
     }
@@ -65,12 +67,19 @@ public class QuestionServiceImpl implements QuestionService {
     public Question addAnswer(Long id, Answer answer){
         Question question = getQuestion(id);
         List<Answer> answers = question.getAnswers();
-        if(answer.getCorrect()){
-            answers.forEach(currentAnswer -> {currentAnswer.setCorrect(false);} );
-        }else{
-            answers.forEach(currentAnswer -> {currentAnswer.setCorrect(true);} );
+
+        if (answers.size() == 0) {
+            answer.setCorrect(true);
+        } else {
+            if (answer.getCorrect()) {
+                for (Answer currentAnswer : answers) {
+                    currentAnswer.setCorrect(false);
+                }
+            }
         }
+
         question.addAnswer(answer);
+
         return questionRepository.save(question);
     }
 
