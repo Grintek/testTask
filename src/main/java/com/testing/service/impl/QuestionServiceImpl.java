@@ -49,7 +49,9 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         upQuestion.getAnswers().clear();
-
+        if(question.getAnswers().size() == 1){
+            question.getAnswers().get(0).setCorrect(true);
+        }
         upQuestion.getAnswers().addAll(question.getAnswers());
 
         questionRepository.save(upQuestion);
