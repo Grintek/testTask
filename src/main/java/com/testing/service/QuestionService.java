@@ -10,7 +10,7 @@ public interface QuestionService {
 
     List<Question> getQuestions();
 
-    Question createQuestion(Question question);
+    List<Question> createQuestion(Question question);
 
     Question updateQuestion(Long id, Question question);
 
@@ -18,5 +18,5 @@ public interface QuestionService {
 
     Question addAnswer(Long id, Answer answer);
 
-    void deleteById(Long id);
+    List<Question> deleteById(Long id);
 }

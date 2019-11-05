@@ -30,14 +30,14 @@ public class ManagerRestController {
 
 
     @PostMapping
-    public Question addQuestion(@RequestBody Question question){
+    public List<Question> addQuestion(@RequestBody Question question){
         return questionService.createQuestion(question);
     }
 
 
     @DeleteMapping("/{id}")
-    public void removeQuestion(@PathVariable("id") Long id){
-        questionService.deleteById(id);
+    public List<Question> removeQuestion(@PathVariable("id") Long id){
+        return questionService.deleteById(id);
     }
 
     @GetMapping("/{id}")

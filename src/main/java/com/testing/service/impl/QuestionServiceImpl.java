@@ -26,8 +26,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question createQuestion(Question question){
-           return questionRepository.save(question);
+    public List<Question> createQuestion(Question question){
+        questionRepository.save(question);
+        return getQuestions();
     }
 
     @Override
@@ -86,7 +87,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public List<Question> deleteById(Long id) {
         questionRepository.deleteById(id);
+        return getQuestions();
     }
 }

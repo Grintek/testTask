@@ -24,7 +24,6 @@ public class TestRestController {
     }
 
     @GetMapping
-    @JsonView(View.Answer.class)
     public List<Question> testQuestion(){
         return questionService.getQuestions();
     }
