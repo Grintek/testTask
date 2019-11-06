@@ -98,8 +98,30 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Result resultTest(Data data) {
         System.out.println(data.getData());
-        Result result = new Result();
-        return result;
+        List<Question> questions = questionRepository.findAll();
+        long correct = 0;
+        long incorrect = 0;
+        for(CountSuccess fin : data.getData() ){
+
+            if(fin.getAnswer() != null) {
+                for (Question question : questions) {
+                    assert fin.getQuestion() != null;
+                    if (fin.getQuestion().equals(question.getId())) {
+                        for(Answer answer : question.getAnswers()){
+                            if(answer.getId().equals(fin.getAnswer())){
+                                if(answer.getCorrect()){
+                                    correct++;
+                                }else {
+                                    incorrect++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return new Result(correct, incorrect);
     }
 
 }

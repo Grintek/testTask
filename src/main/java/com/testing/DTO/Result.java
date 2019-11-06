@@ -7,6 +7,11 @@ public class Result {
     public Result() {
     }
 
+    public Result(Long correct, Long incorrect) {
+        this.correct = correct;
+        this.incorrect = incorrect;
+    }
+
     public Long getCorrect() {
         return correct;
     }
