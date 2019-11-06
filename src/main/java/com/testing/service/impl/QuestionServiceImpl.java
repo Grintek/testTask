@@ -1,5 +1,8 @@
 package com.testing.service.impl;
 
+import com.testing.DTO.CountSuccess;
+import com.testing.DTO.Data;
+import com.testing.DTO.Result;
 import com.testing.domain.Answer;
 import com.testing.domain.Question;
 import com.testing.reposytory.QuestionRepository;
@@ -91,4 +94,12 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.deleteById(id);
         return getQuestions();
     }
+
+    @Override
+    public Result resultTest(Data data) {
+        System.out.println(data.getData());
+        Result result = new Result();
+        return result;
+    }
+
 }

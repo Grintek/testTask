@@ -1,5 +1,8 @@
 package com.testing.service;
 
+import com.testing.DTO.CountSuccess;
+import com.testing.DTO.Data;
+import com.testing.DTO.Result;
 import com.testing.domain.Answer;
 import com.testing.domain.Question;
 
@@ -19,4 +22,6 @@ public interface QuestionService {
     Question addAnswer(Long id, Answer answer);
 
     List<Question> deleteById(Long id);
+
+    Result resultTest(Data data);
 }
